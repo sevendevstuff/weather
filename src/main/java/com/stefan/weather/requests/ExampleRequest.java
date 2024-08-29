@@ -6,7 +6,6 @@ import lombok.*;
 @Data
 public class ExampleRequest {
     @NotNull(message = "String should not be null")
-    @NotNull(message = "String should not be null")
     private String exampleString;
     private Long exampleLong;
 }

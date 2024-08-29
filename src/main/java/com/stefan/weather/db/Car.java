@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity(name = "car")
+@Builder
 public class Car {
 
     @Id
