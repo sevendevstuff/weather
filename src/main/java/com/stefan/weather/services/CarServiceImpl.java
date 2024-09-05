@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
 
 @RequiredArgsConstructor
 @Service
@@ -22,11 +24,8 @@ public class CarServiceImpl implements CarService {
 
     private Car mapCarRequestToCarEntity(CarRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        TemporalAccessor accessor = formatter.parse(request.getFabricationYear());
 
-        return Car.builder()
-                .name(request.getName())
-                .doorNumber(request.getDoorNumber())
-                .fabricationYear(LocalDate.parse(request.getFabricationYear(), formatter))
-                .build();
+        return new Car(request.getDoorNumber(), request.getName(), LocalDate.of(accessor.get(ChronoField.YEAR), 1, 1));
     }
 }

@@ -7,8 +7,13 @@ import java.time.LocalDate;
 
 @Data
 @Entity(name = "car")
-@Builder
+@NoArgsConstructor
 public class Car {
+    public Car(Integer doorNumber, String name, LocalDate fabricationYear) {
+        this.doorNumber = doorNumber;
+        this.name = name;
+        this.fabricationYear = fabricationYear;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +21,7 @@ public class Car {
 
     private Integer doorNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Temporal(TemporalType.DATE)

@@ -1,22 +1,25 @@
 package com.stefan.weather.controllers;
 
+import com.stefan.weather.db.Car;
 import com.stefan.weather.repositories.CarRepository;
-import com.stefan.weather.requests.CarRequest;
 import com.stefan.weather.services.CarService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+import java.util.List;
+
+@Controller
 @RequiredArgsConstructor
 public class CarController {
     private final CarService service;
+    private final CarRepository repository;
 
-    @PostMapping("/cars")
-    public ResponseEntity<Integer> addCar(@RequestBody CarRequest request) {
-        return ResponseEntity.ok(service.addCar(request));
+    @GetMapping("/cars")
+    private String getCars(Model model) {
+        List<Car> cars = repository.findAll();
+        model.addAttribute("dataList", cars);
+        return "car";
     }
 }

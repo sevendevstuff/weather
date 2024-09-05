@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Template</title>
+    <style>
+        /* Basic styling for demonstration */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .data-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .data-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>My CRUD Page</h1>
+
+    <button id="add-button">+</button>
+
+    <ul class="data-list" th:each="item : ${dataList}">
+        <li class="data-item" th:text="${item}"></li>
+    </ul>
+
+    <div id="add-popup" class="popup">
+        <h2>Add New Data</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+
+            <label for="fabricationYear">Fabrication Year:</label>
+            <input type="number" id="fabricationYear" name="fabricationYear"><br><br>
+
+            <label for="doorNumber">Number of Doors:</label>
+            <input type="number" id="doorNumber" name="doorNumber"><br><br>
+
+            <button type="submit">Add</button>
+            <button type="button" onclick="closePopup()">Close</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Basic JavaScript for demonstration
+    document.getElementById('add-button').addEventListener('click', () => {
+        document.getElementById('add-popup').style.display = 'block';
+    });
+
+    function closePopup() {
+        document.getElementById('add-popup').style.display = 'none';
+    }
+
+    document.querySelector('#add-popup form').addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(event.target);
+
+    const plainFormData = Object.fromEntries(formData.entries());
+    const jsonData = JSON.stringify(plainFormData);
+
+    fetch('/cars', { // Replace with your actual endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: jsonData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // Handle successful response (e.g., close popup, refresh data list)
+        closePopup();
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Error during POST request:', error);
+        // Handle errors (e.g., display error message to the user)
+    });
+});
+</script>
+
+</body>
+</html>
