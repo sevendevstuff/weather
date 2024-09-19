@@ -26,4 +26,10 @@ public class Car {
 
     @Temporal(TemporalType.DATE)
     private LocalDate fabricationYear;
+
+    public void merge(Car c) {
+        this.doorNumber = c.getDoorNumber();
+        this.name = c.getName();
+        this.fabricationYear = c.getFabricationYear();
+    }
 }

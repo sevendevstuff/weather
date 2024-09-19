@@ -2,6 +2,7 @@ package com.stefan.weather.controllers;
 
 import com.stefan.weather.requests.CarRequest;
 import com.stefan.weather.services.CarService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +23,22 @@ public class CarRestController {
     }
 
     @PutMapping("/cars/{id}")
-    public void editCar(@RequestBody CarRequest request, @PathVariable Integer id) {
-
+    public ResponseEntity<Integer> editCar(@RequestBody CarRequest request, @PathVariable Integer id) {
+        try {
+            Integer response = service.editCar(request, id);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/cars/{id}/delete")
-    public void deleteCar(@PathVariable Integer id) {
-
+    public ResponseEntity<Void> deleteCar(@PathVariable Integer id) {
+        try {
+            service.deleteCar(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
