@@ -12,21 +12,25 @@ import java.util.List;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer id;
 
     @Column(nullable = false)
-    private String firstName;
+    public String firstName;
 
     @Column(nullable = false)
-    private String lastName;
+    public String lastName;
 
     @Column(nullable = false)
-    private String email;
+    public String email;
 
     @Column(nullable = false)
-    private String password;
+    public String password;
 
-    @Type(ListArrayType.class)
-    @Column(nullable = false, columnDefinition = "text[]")
-    private List<String> cities;
+    @OneToMany()
+    @JoinTable(
+            name = "account_city", // Name of the join table
+            joinColumns = @JoinColumn(name = "account_id"), // Foreign key to Account
+            inverseJoinColumns = @JoinColumn(name = "city_id") // Foreign key to City
+    )
+    public List<City> cities;
 }
