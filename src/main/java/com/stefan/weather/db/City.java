@@ -14,4 +14,7 @@ public class City {
 
     @Column(unique = true, nullable = false)
     public String name;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    public WeatherCondition weatherCondition;
 }
