@@ -32,5 +32,5 @@ public class Account {
             joinColumns = @JoinColumn(name = "account_id"), // Foreign key to Account
             inverseJoinColumns = @JoinColumn(name = "city_id") // Foreign key to City
     )
-    public List<City> cities;
+    public List<City> favouriteCities;
 }
