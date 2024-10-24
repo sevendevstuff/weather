@@ -2,13 +2,17 @@ package com.stefan.weather.db;
 
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import java.util.List;
 
 @Data
 @Entity(name = "account")
+@NoArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +24,7 @@ public class Account {
     @Column(nullable = false)
     public String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     public String email;
 
     @Column(nullable = false)
@@ -33,4 +37,12 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "city_id") // Foreign key to City
     )
     public List<City> favouriteCities;
+
+    public Account(String firstName, String lastName, String email, String password, List<City> favouriteCities) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.favouriteCities = favouriteCities;
+    }
 }

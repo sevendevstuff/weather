@@ -14,6 +14,6 @@ public class WeatherCondition {
     public Condition condition;
     public Double temperature;
 
-    @OneToOne(mappedBy = "city")
+    @OneToOne(mappedBy = "weatherCondition")
     public City city;
 }
