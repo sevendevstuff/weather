@@ -13,6 +13,7 @@ public class WeatherCondition {
     public Integer id;
     public Condition condition;
     public Double temperature;
+    public Double windSpeed;
 
     @OneToOne(mappedBy = "weatherCondition")
     public City city;

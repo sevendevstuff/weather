@@ -12,4 +12,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer>  {
         SELECT a.* FROM Account a WHERE a.id = :#{#account.id};
     """, nativeQuery = true)
     List<Account> findById(@Param("account") Account account);
+
+    @Query(value = """
+            SELECT a FROM Account a WHERE a.email = :email;
+    """, nativeQuery = true)
+    Account findByEmail(String email);
 }

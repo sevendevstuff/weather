@@ -15,3 +15,6 @@ spring:
         hibernate:
           format_sql: true
       database: postgresql
+
+weather.properties:
+  hello-message: "Hello world"
