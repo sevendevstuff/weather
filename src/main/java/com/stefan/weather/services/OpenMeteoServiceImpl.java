@@ -21,12 +21,9 @@ public class OpenMeteoServiceImpl implements OpenMeteoService{
     public WeatherCondition getWeather(double lat, double lon) {
         String url = "https://api.open-meteo.com/v1/forecast";
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("latitude", lat);
-        params.put("longitude", lon);
-        params.put("current", List.of("temperature_2m", "wind_speed_10m"));
+        String buildUrl = url + "?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,wind_speed_10m";
 
-        OpenMeteoApiResponse response = restTemplate.getForObject(url, OpenMeteoApiResponse.class, params);
+        OpenMeteoApiResponse response = restTemplate.getForObject(buildUrl, OpenMeteoApiResponse.class);
 
         return mapper.toDomain(response);
     }
