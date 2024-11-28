@@ -35,6 +35,7 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.mapstruct:mapstruct:1.6.3'
+	implementation 'io.hypersistence:hypersistence-utils-hibernate-55:3.7.0'
 
 
 	runtimeOnly 'com.h2database:h2'
